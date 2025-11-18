@@ -1,0 +1,152 @@
+================================================================================
+BRAND PRESENCE AUDIT REPORT
+================================================================================
+
+Audit Date: 2025-11-18T12:25:17.576132
+Source File: rufus_responses/rufus_responses_20251118_122339.json
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total Responses Analyzed: 20
+Responses with Your Brands: 2 (10.0%)
+Responses with Competitors: 0 (0.0%)
+Responses with Both: 0
+Responses with Neither: 18
+Total Your Brand Mentions: 6
+Total Competitor Mentions: 0
+
+YOUR BRANDS
+--------------------------------------------------------------------------------
+  coca-cola:
+    Total Mentions: 4
+    Responses Mentioned In: 2
+  coke:
+    Total Mentions: 2
+    Responses Mentioned In: 1
+
+COMPETITOR BRANDS
+--------------------------------------------------------------------------------
+  No mentions found.
+
+DETAILED RESPONSE ANALYSIS
+--------------------------------------------------------------------------------
+
+Response 1:
+  Question: What’s the best Coca-Cola pack size for stocking up before Thanksgiving guests arrive?
+  Your Brands: coca-cola
+  Competitors: None
+  Mentions: Your=3, Competitors=0
+
+Response 2:
+  Question: Are there any Coke holiday-themed bundles or limited-edition flavors for Christmas?
+  Your Brands: coca-cola, coke
+  Competitors: None
+  Mentions: Your=3, Competitors=0
+
+Response 3:
+  Question: Which zero-sugar soda is popular for holiday parties?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 4:
+  Question: I need 2-liter sodas for Thanksgiving dinner — which ones stay fizzy the longest?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 5:
+  Question: What’s a good vanilla soda for making holiday mocktails?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 6:
+  Question: Which soft drinks come in festive packaging for the holiday season?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 7:
+  Question: What’s the best deal on soda can 12-packs for Christmas gatherings?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 8:
+  Question: Which flavored sodas pair well with rich holiday meals?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 9:
+  Question: Are there mini-soda packs good for stocking stuffers or party favors?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 10:
+  Question: What’s a good diet soda option for a big Thanksgiving crowd?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 11:
+  Question: Are there any creamy vanilla sodas that work well in holiday dessert recipes?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 12:
+  Question: Which cold brew coffee is best for serving with Thanksgiving breakfast?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 13:
+  Question: Are there any holiday-edition Frappuccino or bottled coffee drinks?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 14:
+  Question: What’s a good iced coffee to keep on hand for holiday houseguests?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 15:
+  Question: Which mocha drinks come in holiday flavors?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 16:
+  Question: Is there a super coffee flavor that works well as a Christmas morning pick-me-up?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 17:
+  Question: What’s the best vanilla flavor coffee drink for holiday lattes?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 18:
+  Question: Which cold brew brands offer seasonal blends for the holidays?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 19:
+  Question: Are there coffee drinks that make good last-minute Christmas gifts?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0
+
+Response 20:
+  Question: What’s a good flavored cola or coffee to use in holiday recipes?
+  Your Brands: None
+  Competitors: None
+  Mentions: Your=0, Competitors=0

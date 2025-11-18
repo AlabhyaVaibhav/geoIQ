@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Credentials and config
+config.json
+*.key
+*.pem
+
+# Output files
+rufus_responses/
+*.log
+*.json
+!config.example.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Selenium
+*.crx
+chromedriver
+geckodriver
+

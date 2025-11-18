@@ -1,0 +1,12 @@
+{
+  "amazon": {
+    "email": "your-email@example.com",
+    "password": "your-password"
+  },
+  "settings": {
+    "headless": false,
+    "wait_timeout": 30,
+    "question_delay": 3
+  }
+}
+

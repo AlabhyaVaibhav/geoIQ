@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rufus AI Response Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .file-upload {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            background: #e9ecef;
+            border-color: #764ba2;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .responses-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .response-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .response-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .question {
+            flex: 1;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 0.85em;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        .response-content {
+            color: #555;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .response-content.empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            color: #666;
+        }
+
+        .no-data h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .response-length {
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .products-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .products-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .product-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .product-rating .stars {
+            color: #ffa500;
+        }
+
+        .product-delivery {
+            font-size: 0.8em;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        .product-section-header {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.85em;
+        }
+
+        .product-link:hover {
+            text-decoration: underline;
+        }
+
+        .followup-questions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .followup-questions h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .followup-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .followup-pill {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid #b3d9ff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .followup-pill:hover {
+            background: #cce7ff;
+            transform: translateY(-1px);
+        }
+
+        .no-products {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .response-header {
+                flex-direction: column;
+            }
+
+            .timestamp {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Rufus AI Response Visualizer</h1>
+            <p>Upload and visualize your Rufus AI conversation responses</p>
+            
+            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" accept=".json" onchange="handleFileUpload(event)">
+                <p>📁 Click to upload JSON file or drag and drop</p>
+                <p style="font-size: 0.9em; color: #999; margin-top: 5px;">Select a rufus_responses_*.json file</p>
+            </div>
+        </div>
+
+        <div id="content" class="hidden">
+            <div class="stats" id="stats"></div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search questions or responses..." oninput="filterResponses()">
+            </div>
+
+            <div class="responses-container" id="responsesContainer"></div>
+        </div>
+
+        <div id="noData" class="no-data">
+            <h2>No Data Loaded</h2>
+            <p>Upload a JSON file to get started</p>
+        </div>
+    </div>
+
+    <script>
+        let responseData = null;
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    responseData = JSON.parse(e.target.result);
+                    displayData(responseData);
+                } catch (error) {
+                    alert('Error parsing JSON file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function displayData(data) {
+            document.getElementById('noData').classList.add('hidden');
+            document.getElementById('content').classList.remove('hidden');
+
+            // Display statistics
+            displayStats(data);
+
+            // Display responses
+            displayResponses(data.results || []);
+        }
+
+        function displayStats(data) {
+            const results = data.results || [];
+            const totalQuestions = results.length;
+            const avgResponseLength = results.reduce((sum, r) => sum + (r.response?.length || 0), 0) / totalQuestions || 0;
+            const responsesWithContent = results.filter(r => r.response && r.response.trim().length > 50).length;
+            const totalProducts = results.reduce((sum, r) => sum + (r.products?.length || 0), 0);
+            const responsesWithProducts = results.filter(r => r.products && r.products.length > 0).length;
+            const date = new Date(data.timestamp || Date.now()).toLocaleDateString();
+
+            const statsHtml = `
+                <div class="stat-card">
+                    <h3>Total Questions</h3>
+                    <div class="value">${totalQuestions}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Products</h3>
+                    <div class="value">${totalProducts}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Responses with Products</h3>
+                    <div class="value">${responsesWithProducts}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Response Length</h3>
+                    <div class="value">${Math.round(avgResponseLength)}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Date Collected</h3>
+                    <div class="value" style="font-size: 1.2em;">${date}</div>
+                </div>
+            `;
+
+            document.getElementById('stats').innerHTML = statsHtml;
+        }
+
+        function displayResponses(responses) {
+            const container = document.getElementById('responsesContainer');
+            container.innerHTML = '';
+
+            responses.forEach((result, index) => {
+                const card = createResponseCard(result, index + 1);
+                container.appendChild(card);
+            });
+        }
+
+        function createResponseCard(result, index) {
+            const card = document.createElement('div');
+            card.className = 'response-card';
+            card.dataset.index = index;
+
+            const timestamp = new Date(result.timestamp).toLocaleString();
+            const responseText = result.response || 'No response captured';
+            const isEmpty = !result.response || result.response.trim().length < 50;
+            const responseLength = result.response?.length || 0;
+
+            // Check if response seems incomplete
+            const isIncomplete = responseText.includes('Thinking...') || 
+                                responseText.includes('Gathering products...') ||
+                                responseText.length < 100;
+
+            const products = result.products || [];
+            const followupQuestions = result.followup_questions || [];
+            
+            let productsHtml = '';
+            if (products.length > 0) {
+                productsHtml = `
+                    <div class="products-section">
+                        <h3>📦 Products Recommended (${products.length})</h3>
+                        <div class="products-grid">
+                            ${products.map(product => `
+                                <div class="product-card">
+                                    ${product.section_header ? `<div class="product-section-header">${escapeHtml(product.section_header)}</div>` : ''}
+                                    ${product.image_url ? `<img src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.title)}" class="product-image" onerror="this.style.display='none'">` : ''}
+                                    <div class="product-title">${escapeHtml(product.title)}</div>
+                                    ${product.price ? `<div class="product-price">${escapeHtml(product.price.replace(/\n/g, ''))}</div>` : ''}
+                                    ${product.rating ? `
+                                        <div class="product-rating">
+                                            <span class="stars">★</span>
+                                            <span>${escapeHtml(product.rating)}</span>
+                                            ${product.review_count ? `<span>(${escapeHtml(product.review_count)})</span>` : ''}
+                                        </div>
+                                    ` : ''}
+                                    ${product.delivery ? `<div class="product-delivery">🚚 ${escapeHtml(product.delivery)}</div>` : ''}
+                                    ${product.url ? `<a href="${escapeHtml(product.url)}" target="_blank" class="product-link">View on Amazon →</a>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                productsHtml = '<div class="products-section"><div class="no-products">No products recommended in this response</div></div>';
+            }
+
+            let followupHtml = '';
+            if (followupQuestions.length > 0) {
+                followupHtml = `
+                    <div class="followup-questions">
+                        <h3>💡 Follow-up Questions</h3>
+                        <div class="followup-pills">
+                            ${followupQuestions.map(q => `
+                                <div class="followup-pill">${escapeHtml(q)}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="response-header">
+                    <div class="question">
+                        <strong>Q${index}:</strong> ${escapeHtml(result.question || 'No question')}
+                        ${isEmpty ? '<span class="badge warning">Incomplete</span>' : ''}
+                        ${isIncomplete ? '<span class="badge warning">Loading...</span>' : '<span class="badge success">Complete</span>'}
+                    </div>
+                    <div class="timestamp">${timestamp}</div>
+                </div>
+                <div class="response-content ${isEmpty ? 'empty' : ''}">
+                    ${escapeHtml(responseText)}
+                </div>
+                <div class="response-length">
+                    Response length: ${responseLength} characters
+                </div>
+                ${productsHtml}
+                ${followupHtml}
+            `;
+
+            return card;
+        }
+
+        function filterResponses() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.response-card');
+
+            cards.forEach(card => {
+                const question = card.querySelector('.question').textContent.toLowerCase();
+                const response = card.querySelector('.response-content').textContent.toLowerCase();
+                
+                // Also search in products
+                const productCards = card.querySelectorAll('.product-card');
+                let productMatches = false;
+                productCards.forEach(productCard => {
+                    const productText = productCard.textContent.toLowerCase();
+                    if (productText.includes(searchTerm)) {
+                        productMatches = true;
+                    }
+                });
+                
+                const matches = question.includes(searchTerm) || response.includes(searchTerm) || productMatches;
+                card.style.display = matches ? 'block' : 'none';
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Allow drag and drop
+        const fileUpload = document.querySelector('.file-upload');
+        
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.style.background = '#e9ecef';
+        });
+
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.style.background = '#f8f9fa';
+        });
+
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.style.background = '#f8f9fa';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        responseData = JSON.parse(e.target.result);
+                        displayData(responseData);
+                    } catch (error) {
+                        alert('Error parsing JSON file: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please drop a JSON file');
+            }
+        });
+    </script>
+</body>
+</html>
+
